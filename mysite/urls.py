@@ -22,7 +22,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.CurrencyDataView.as_view(), name='index' ),
-    path('language/<str:lang>', views.test1, name='language' ),
-
+    path('', views.exchange, name='index'),
+    path('language/<str:lang>', views.test1, name='language' )
 ]
