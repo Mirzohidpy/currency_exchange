@@ -10,6 +10,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'main_body/css/style.css' %}">
     <title>Document</title>
+    <style>
+        .currency table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+
+        .currency table tr th {
+            text-align: center;
+            background-color: green;
+            color: white;
+            font-weight: 500;
+
+        }
+
+        .currency table tr:nth-child(odd){
+            background:rgb(235, 235, 235);
+        }
+        .currency td, .currency th{
+            border: 1px solid #fff;
+            text-align: left;
+            padding: 5px 10px;
+        }
+    </style>
 </head>
 <body style="background-image: url('{% static 'main_body/images/body.jpg' %}');">
         <ul class='language' style="display: flex; list-style-type: None; margin-left: 39%;">
@@ -21,13 +45,55 @@
         </ul>
 
     <ul class='currency' style="list-style-type: None;">
-        {% for currency in currencies %}
-        <li>
+        
+        <table>
+            <tr>
+                <th>Country Code</th>
+                <th>Currency</th>
+                <th>Number Code</th>
+                <th>Currency Rate</th>
+                <th>Currency Country</th>
+            </tr>
+            
+            {% for currency in currencies %}
+            <tr>
+                   {% for valyuta in currency %}
+                <td>
+                    <li>
+                    {{valyuta.code}}
+                    </li>
+                </td>
+                <td>
+                    <li>
+                       {{valyuta.Currency}}
+                    </li>
+                </td>
+                <td>
+                    <li>
+                     {{valyuta.pn}}
+                    </li>
+                </td>
+                <td>
+                    <li>
+                        {{valyuta.Rate}}
+                    </li>
+                </td>
+                <td>
+                    <li>
+                        {{valyuta.country}}
+                    </li>
+                </td>
+                {% endfor %}
+            </tr>
+            {%endfor%}
+          </table>
+    </ul>
+        {% comment %} <li>
         <ul style="display: flex; list-style-type: None;">
-            {% for valyuta in currency %}
+            
             <li>
-                <ul style="margin-top: 10px; display: flex; list-style-type: None;">
-                    <table>
+                <ul style="margin-top: 10px; display: flex; list-style-type: None;"> {% endcomment %}
+                    {% comment %} <table>
                         <tr>
                             <th>Country Code</th>
                             <th>Currency</th>
@@ -36,41 +102,41 @@
                             <th>Currency Country</th>
                         </tr>
                         <tr>
-                            <td>
-                                <li style="margin-left:5px;">
+                            <td> {% endcomment %}
+                                {% comment %} <li style="margin-left:5px;">
                                 {{valyuta.code}}
                                 </li>
-                            </td>
-                            <td style="margin-left:20px;">
-                                <li style="margin-left:20px;">
+                            {% comment %} </td> {% endcomment %}
+                            {% comment %} <td style="margin-left:20px;"> {% endcomment %}
+                                {% comment %} <li style="margin-left:20px;">
                                 {{valyuta.Currency}}
-                                </li>
-                            </td>
-                            <td style="margin-left:20px;">
-                                <li style="margin-left:20px;">
+                                </li> {% endcomment %}
+                            {% comment %} </td> {% endcomment %}
+                            {% comment %} <td style="margin-left:20px;"> {% endcomment %}
+                                {% comment %} <li style="margin-left:20px;">
                                 {{valyuta.pn}}
-                                </li>
-                            </td>
-                            <td style="margin-left:20px;">
-                                <li style="margin-left:20px;">
+                                </li> {% endcomment %}
+                            {% comment %} </td> {% endcomment %}
+                            {% comment %} <td style="margin-left:20px;"> {% endcomment %}
+                                {% comment %} <li style="margin-left:20px;">
                                 {{valyuta.Rate}}
-                                </li>
-                            </td>
-                            <td style="margin-left:20px;">
-                                <li style="margin-left:20px;">
+                                </li> {% endcomment %}
+                            {% comment %} </td> {% endcomment %}
+                            {% comment %} <td style="margin-left:20px;"> {% endcomment %}
+                                {% comment %} <li style="margin-left:20px;">
                                 {{valyuta.country}}
-                                </li>
-                            </td>
-                        </tr>
+                                </li> {% endcomment %}
+                            {% comment %} </td> {% endcomment %}
+                        {% comment %} </tr> {% endcomment %}
                        
-                    </table>
+                    {% comment %} </table> {% endcomment %}
                    
-                </ul>
-            </li>
-            {% endfor %}
-        </ul>
-        </li>
-        {%endfor%}
-    </ul>
+                {% comment %} </ul>
+            </li> {% endcomment %} 
+            
+        {% comment %} </ul>
+        </li> {% endcomment %}
+        
+    {% comment %} </ul> {% endcomment %}
 </body>
 </html>
