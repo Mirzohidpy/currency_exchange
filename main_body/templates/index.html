@@ -1,16 +1,39 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block links %}
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'main_body/css/style.css' %}">
+    {% endblock links %}
     <title>Document</title>
     <style>
+        {% block style %}
+        .button {
+            transition-duration: 0.4s;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            background-color: #fff;
+            margin-right: 100px;
+          }
+          
+          .button:hover {
+            background-color: #4CAF50; 
+          }
+          .button a{
+              text-decoration:none;
+              color:black;
+          }
+          .button:hover a{
+            text-decoration:none;
+            color: white;
+        }
+
         .currency table{
             width: 100%;
             border-collapse: collapse;
@@ -26,16 +49,16 @@
         }
 
         .currency table tr:nth-child(odd){
-            background:rgb(235, 235, 235);
+            background:rgb(47, 47, 47);
         }
         .currency td, .currency th{
             border: 1px solid #fff;
             text-align: left;
             padding: 5px 10px;
         }
+        {% endblock style %}
     </style>
-</head>
-<body style="background-image: url('{% static 'main_body/images/body.jpg' %}');">
+{% block main %}
         <ul class='language' style="display: flex; list-style-type: None; margin-left: 39%;">
             <li><a href="{% url 'language' 'UZ' %}">UZ</a><span> | </span></li>
             <li><a href="{% url 'language' 'RU'%}">RU</a><span> | </span></li>
@@ -88,55 +111,4 @@
             {%endfor%}
           </table>
     </ul>
-        {% comment %} <li>
-        <ul style="display: flex; list-style-type: None;">
-            
-            <li>
-                <ul style="margin-top: 10px; display: flex; list-style-type: None;"> {% endcomment %}
-                    {% comment %} <table>
-                        <tr>
-                            <th>Country Code</th>
-                            <th>Currency</th>
-                            <th>Number Code</th>
-                            <th>Currency Rate</th>
-                            <th>Currency Country</th>
-                        </tr>
-                        <tr>
-                            <td> {% endcomment %}
-                                {% comment %} <li style="margin-left:5px;">
-                                {{valyuta.code}}
-                                </li>
-                            {% comment %} </td> {% endcomment %}
-                            {% comment %} <td style="margin-left:20px;"> {% endcomment %}
-                                {% comment %} <li style="margin-left:20px;">
-                                {{valyuta.Currency}}
-                                </li> {% endcomment %}
-                            {% comment %} </td> {% endcomment %}
-                            {% comment %} <td style="margin-left:20px;"> {% endcomment %}
-                                {% comment %} <li style="margin-left:20px;">
-                                {{valyuta.pn}}
-                                </li> {% endcomment %}
-                            {% comment %} </td> {% endcomment %}
-                            {% comment %} <td style="margin-left:20px;"> {% endcomment %}
-                                {% comment %} <li style="margin-left:20px;">
-                                {{valyuta.Rate}}
-                                </li> {% endcomment %}
-                            {% comment %} </td> {% endcomment %}
-                            {% comment %} <td style="margin-left:20px;"> {% endcomment %}
-                                {% comment %} <li style="margin-left:20px;">
-                                {{valyuta.country}}
-                                </li> {% endcomment %}
-                            {% comment %} </td> {% endcomment %}
-                        {% comment %} </tr> {% endcomment %}
-                       
-                    {% comment %} </table> {% endcomment %}
-                   
-                {% comment %} </ul>
-            </li> {% endcomment %} 
-            
-        {% comment %} </ul>
-        </li> {% endcomment %}
-        
-    {% comment %} </ul> {% endcomment %}
-</body>
-</html>
+    {% endblock main %}

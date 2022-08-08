@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {% include 'components/_head_settings.html' %}
+    {% block links %}
+    {% endblock links %}
+    <title></title>
+    <style>
+        {% block style %}
+        
+        {% endblock style %}
+    </style>
+
+  </head>
+  <body>
+
+    {% include 'layouts/header.html' %}
+      {% block main %}
+
+      {% endblock main %}
+      
+    
+    {% include 'layouts/footer.html' %}
+  
+  </body>
+  </html>

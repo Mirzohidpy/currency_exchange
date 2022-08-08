@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    <title>Document</title>
+    <style>
+        {% block style %}
+        .button {
+            transition-duration: 0.4s;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            background-color: #fff;
+            margin-right: 100px;
+          }
+          
+          .button:hover {
+            background-color: #4CAF50; 
+          }
+          .button a{
+              text-decoration:none;
+              color:black;
+          }
+          .button:hover a{
+            text-decoration:none;
+            color: white;
+        }
+
+        table{
+            border-collapse: collapse;
+        }
+
+        table tr th {
+            text-align: center;
+            background-color: green;
+            color: white;
+            font-weight: 500;
+
+        }
+
+        table tr:nth-child(odd){
+            background:rgb(235, 235, 235);
+        }
+
+        .currency{
+            margin-left: 24%;
+        }
+
+        th{
+            border: 1px solid #fff;
+            text-align: left;
+            padding: 5px 10px;
+        }
+
+        ul li{
+            margin-left: 25px;
+            text-decoration: none;
+        }
+
+        ul li a{
+            text-decoration: none;
+            text-decoration: none;
+            font-size:24px;
+            font-family: Poppins;
+            width: 100px;
+            height: 100px;
+            border: none;
+            outline: none;  
+            color: white;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
+        }
+
+        ul li a:hover{
+            text-decoration: none;
+            color: black;
+            background-color: #fff;
+        }
+
+        .table{
+            margin-left: 0%;
+        }
+
+        {% endblock style %}
+    </style>
+
+{% block main %}
+    <form method='post'>
+        {% csrf_token %}
+        <ul class="currency" style="display:flex; list-style-type: none; ">
+            {% for cur_list in curr_list %}
+                <li><a href="{% url 'currency' cur_list %}" name="{{cur_list}}">{{cur_list}}</a></li>
+            {% endfor %}
+        </ul>
+    </form>
+    <table class="table">
+        <tr>
+            <th>Names</th>
+            <th>Prices</th>
+        </tr>
+        <tr>
+            <td>
+    {% for bank_name in bank_names %}
+                <p>{{bank_name}}</p>
+    {% endfor %}
+            </td>
+            <td>
+    {% for price in prices%}
+                <p>{{price}}</p>
+    {% endfor %}
+            </td>
+        </tr>
+    </table>
+{% endblock main %}

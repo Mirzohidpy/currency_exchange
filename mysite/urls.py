@@ -23,5 +23,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.converter, name='index'),
-    path('language/<str:lang>', views.test1, name='language' )
+    path('language/<str:lang>', views.test1, name='language' ),
+    path('currency/<str:currency>', views.parsing, name='currency')
 ]
