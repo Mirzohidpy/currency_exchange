@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
-    {% block links %}
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+{% block links %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
     <link rel="stylesheet" href="{% static 'main_body/css/style.css' %}">
-    {% endblock links %}
-    <title>Document</title>
-    <style>
-        {% block style %}
-        .button {
+{% endblock links %}
+{% block style %}
+    .button {
             transition-duration: 0.4s;
             border: none;
             color: white;
@@ -18,57 +17,62 @@
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
-            background-color: #fff;
+            background-color: #31C142;
             margin-right: 100px;
-          }
-          
-          .button:hover {
-            background-color: #4CAF50; 
-          }
-          .button a{
-              text-decoration:none;
-              color:black;
-          }
-          .button:hover a{
-            text-decoration:none;
-            color: white;
         }
 
-        .currency table{
+        .button:hover {
+            background-color: #ffffff;
+        }
+        .button a {
+            text-decoration: none;
+            color: white;
+        }
+        .button:hover a {
+            text-decoration: none;
+            color: #31C142;
+        }
+        .container a{
+        color: white;
+        }
+    .currency table {
             width: 100%;
             border-collapse: collapse;
         }
 
+        .currency table li{
+            color: #000000;
+        }
 
         .currency table tr th {
             text-align: center;
-            background-color: green;
+            background-color: #31C142;
             color: white;
             font-weight: 500;
 
         }
 
-        .currency table tr:nth-child(odd){
-            background:rgb(47, 47, 47);
+        .currency table tr:nth-child(odd) {
+            background: #ffffff;
         }
-        .currency td, .currency th{
-            border: 1px solid #fff;
+        .currency td, .currency th {
+            border: 1px solid #206190;
             text-align: left;
             padding: 5px 10px;
         }
-        {% endblock style %}
-    </style>
+{% endblock style%}
+<title>Document</title>
 {% block main %}
-        <ul class='language' style="display: flex; list-style-type: None; margin-left: 39%;">
-            <li><a href="{% url 'language' 'UZ' %}">UZ</a><span> | </span></li>
-            <li><a href="{% url 'language' 'RU'%}">RU</a><span> | </span></li>
-            <li><a href="{% url 'language' 'EN'%}">EN
-            </a> <span>  | </span> </li>
-            <li><a href="{% url 'language' 'UZC'%}">UZC</a></li>
-        </ul>
+    <ul class='language' style="display: flex; list-style-type: None; margin-left: 39%;">
+        <li><a href="{% url 'language' 'UZ' %}">UZ</a><span> | </span></li>
+        <li><a href="{% url 'language' 'RU' %}">RU</a><span> | </span></li>
+        <li><a href="{% url 'language' 'EN' %}">EN
+        </a> <span>  | </span></li>
+        <li><a href="{% url 'language' 'UZC' %}">UZC</a></li>
+    </ul>
 
     <ul class='currency' style="list-style-type: None;">
-        
+
         <table>
             <tr>
                 <th>Country Code</th>
@@ -77,38 +81,38 @@
                 <th>Currency Rate</th>
                 <th>Currency Country</th>
             </tr>
-            
+
             {% for currency in currencies %}
-            <tr>
-                   {% for valyuta in currency %}
-                <td>
-                    <li>
-                    {{valyuta.code}}
-                    </li>
-                </td>
-                <td>
-                    <li>
-                       {{valyuta.Currency}}
-                    </li>
-                </td>
-                <td>
-                    <li>
-                     {{valyuta.pn}}
-                    </li>
-                </td>
-                <td>
-                    <li>
-                        {{valyuta.Rate}}
-                    </li>
-                </td>
-                <td>
-                    <li>
-                        {{valyuta.country}}
-                    </li>
-                </td>
-                {% endfor %}
-            </tr>
-            {%endfor%}
-          </table>
+                <tr>
+                    {% for valyuta in currency %}
+                        <td>
+                            <li>
+                                {{ valyuta.code }}
+                            </li>
+                        </td>
+                        <td>
+                            <li>
+                                {{ valyuta.Currency }}
+                            </li>
+                        </td>
+                        <td>
+                            <li>
+                                {{ valyuta.pn }}
+                            </li>
+                        </td>
+                        <td>
+                            <li>
+                                {{ valyuta.Rate }}
+                            </li>
+                        </td>
+                        <td>
+                            <li>
+                                {{ valyuta.country }}
+                            </li>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
     </ul>
-    {% endblock main %}
+{% endblock main %}

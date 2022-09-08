@@ -1,21 +1,12 @@
-from contextlib import contextmanager
-from html.entities import html5
-from unittest import result
-from django.forms import BooleanField
-from django.views.generic import ListView
-from pyexpat import model
-from re import template
-from urllib import response
+from django.http import JsonResponse
 from django.shortcuts import render
 import requests
-from pprint import pp, pprint
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
 from bs4 import BeautifulSoup as b
-from .translate import to_latin
-import sqlite3 as sql
-
+from pprint import pprint
+from datetime import datetime
+import json
 
 
 def test1(request, lang):
@@ -34,7 +25,7 @@ def test1(request, lang):
         language_type = None
         Currency_country = None
         for l in language:
-             if l == lang:
+            if l == lang:
                 language_type = l
                 Currency_country = d[f'CcyNm_{l}']
 
@@ -44,13 +35,13 @@ def test1(request, lang):
             'pn': pn,
             'code': code,
             'Currency': Currency,
-            'Rate' : Rate,
+            'Rate': Rate,
             'country': Currency_country,
-                   
+
         })
-    
+
         currencies.append(valyuta)
-    return render(request, 'index.html', {'currencies':currencies})
+    return render(request, 'index.html', {'currencies': currencies})
 
 
 @csrf_exempt
@@ -64,11 +55,11 @@ def converter(request):
         amount1 = request.POST.get('amount1')
     url1 = f"https://api.apilayer.com/exchangerates_data/convert?to={second}&from={first}&amount={amount1}"
     payload1 = {}
-    headers= {
-        "apikey": "aE9dlfzS73DtaIUWcW6eGppSe2hnNhmA"
+    headers = {
+        "apikey": "QCGWr2sEt19zBmXXP46GXWc1G1oSmVId"
     }
 
-    response1 = requests.request("GET", url1, headers=headers, data = payload1)
+    response1 = requests.request("GET", url1, headers=headers, data=payload1)
     result1 = response1.json()
     list_data = []
     date = None
@@ -77,11 +68,11 @@ def converter(request):
     url2 = "https://api.apilayer.com/exchangerates_data/symbols"
     currency_list = []
     payload2 = {}
-    header= {
-         "apikey": "aE9dlfzS73DtaIUWcW6eGppSe2hnNhmA"
+    header = {
+        "apikey": "QCGWr2sEt19zBmXXP46GXWc1G1oSmVId"
     }
 
-    response2 = requests.request("GET", url2, headers=header, data = payload2)
+    response2 = requests.request("GET", url2, headers=header, data=payload2)
     result2 = response2.json()
     for currency in result2.values():
         if isinstance(currency, dict):
@@ -90,7 +81,6 @@ def converter(request):
 
     for data in result1.values():
         list_data.append(data)
-    
 
     for items in list_data:
         if isinstance(items, bool):
@@ -98,74 +88,148 @@ def converter(request):
         elif isinstance(items, str):
             date = items
         elif isinstance(items, float) or isinstance(items, int):
-            rate = items  
+            rate = items
 
-    context={
+    context = {
         'rate': rate,
         'date': date,
         'currency': currency_list
-    }    
+    }
     template = 'echange.html'
     return render(request, template, context)
 
+@csrf_exempt
+def json_converter(request):
+    print('salom')
+    first = None
+    second = None
+    amount1 = None
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        first = data.get('first')
+        second = data.get('second')
+        amount1 = data.get('value')
+    url1 = f"https://api.apilayer.com/exchangerates_data/convert?to={second}&from={first}&amount={amount1}"
+    payload1 = {}
+    headers = {
+        "apikey": "QCGWr2sEt19zBmXXP46GXWc1G1oSmVId"
+    }
 
+    response1 = requests.request("GET", url1, headers=headers, data=payload1)
+    result1 = response1.json()
+    list_data = []
+    date = None
+    rate = None
+    items = None
+    url2 = "https://api.apilayer.com/exchangerates_data/symbols"
+    currency_list = []
+    payload2 = {}
+    header = {
+        "apikey": "QCGWr2sEt19zBmXXP46GXWc1G1oSmVId"
+    }
+
+    response2 = requests.request("GET", url2, headers=header, data=payload2)
+    result2 = response2.json()
+    for currency in result2.values():
+        if isinstance(currency, dict):
+            for smth in currency.keys():
+                currency_list.append(smth)
+
+    for data in result1.values():
+        list_data.append(data)
+
+    for items in list_data:
+        if isinstance(items, bool):
+            list_data.remove(items)
+        elif isinstance(items, str):
+            date = items
+        elif isinstance(items, float) or isinstance(items, int):
+            rate = items
+
+    context = {
+        'rate': rate,
+    }
+    return JsonResponse(context)
+
+
+# # TODO: Parse_data funksiyani yozish
+# def parse_currencies():
+#     #TODO: Parse qilingan ma'lumotni qaytarish.
+#     return
 def parsing(request, currency):
+    # last_update_date = LastUpdatedDate.objects.first()
+    # # TODO: Check if the lates element in the LastUpdatedDate is older than
+    # if last_update_date - datetime.now() > 24:
+    #     # TODO: Agar ma'lumot eski bo'sa Parse qisin
+    #     currencies = parse_currencies()
+    #     #TODO: write currencies to DB
+    #     LastUpdatedDate.objects.create(date=datetime.now())
+    # else:
+    #     # TODO: agar ma'lumot yangi bo'sa DB dan obchiqsin
+    #     currencies = Currency.objects.all
+
     response = requests.get('https://bank.uz/currency/dollar-ssha')
     html = response.text
     soup = b(html, 'html.parser')
     data_curr = soup.find('ul', class_='nav nav-tabs')
     curr = data_curr.find_all('li', class_='nav-item')
     data_item = soup.find('div', id='tab1')
-    bank_namess = html
-    bank_names = []
-    prices = []
+    bank_name_left = []
+    bank_name_right = []
+    prices_left = []
+    prices_right = []
     curr_list = []
+
     for cur in curr:
         cur_name = cur.find('span', class_='medium-text').get_text(strip=True)
         curr_list.append(cur_name)
-            
+
     for cur_list in curr_list:
         if cur_list == currency:
-            divs = data_item.find('div', id=f'best_{cur_list}')  
-            bank_namess = divs.find_all('div', class_='bc-inner-block-left-text')
-            price_items = divs.find_all('div', class_='bc-inner-block-left-texts')
-            print(price_items)
+            divs = data_item.find('div', id=f'best_{cur_list}')
+            bank_names_left = divs.find('div', class_='bc-inner-block-left')
+            bank_names_right = divs.find('div', class_='bc-inner-blocks-right')
+            left_texts = bank_names_left.find_all('div', class_='bc-inner-block-left-texts')
+            right_texts = bank_names_right.find_all('div', class_='bc-inner-block-left-texts')
+            for left_text in left_texts:
+                names1 = left_text.find('span', class_='medium-text').get_text(strip=True)
+                price1 = left_text.find('span', class_='green-date').get_text(strip=True)
+                bank_name_left.append(names1)
+                prices_left.append(price1)
+            for right_text in right_texts:
+                names = right_text.find('span', class_='medium-text').get_text(strip=True)
+                price = right_text.find('span', class_='green-date').get_text(strip=True)
+                bank_name_right.append(names)
+                prices_right.append(price)
 
-    for bank_name in bank_namess:
-        names = bank_name.find('span', class_='medium-text').get_text(strip=True)
-        bank_names.append(names)
-    
-    for amount in price_items:
-        narx = amount.find('span', class_='green-date').get_text(strip=True)
-        prices.append(narx)
-
-
-    # conn = sql.connect('database.db')
-    # c = conn.cursor()
-
-    # c.execute('''
-    #     CREATE TABLE IF NOT EXISTS bankitems (
-    #     bank_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    #     bank_name TEXT,
-    #     bank_prices TEXT
-    #  )
-    # ''')
-
-    # c.executemany('''
-    #     INSERT INTO president(bank_id, bank_name, bank_prices)
-    #     VALUES (?, ?, ?)
-    # ''', bank_names, prices)
-    # conn.commit()
-    # conn.close()
+            # obj.set_arguments(cur_list, )
 
     context = {
         'curr_list': curr_list,
-        'bank_names': bank_names,
-        'prices': prices
+        'bank_names_left': bank_name_left,
+        'bank_names_right': bank_name_right,
+        'prices_left': prices_left,
+        'prices_right': prices_right,
     }
 
+    # pprint(context)
+
+    # for category in data:
+    #     for bank_price_info in category:
+    #         price = bank_price_info['price']
+    #         bank = bank_price_info['']
+
+    arr = []
+    for i in context.values():
+        arr.append(i)
+    obj = Currency()
+    for cur_list in curr_list:
+        if cur_list == currency:
+            for i in range(len(arr[1])):
+                print(cur_list)
+                obj.set_arguments(cur_list, arr[1][i], arr[2][i], arr[3][i], arr[4][i])
+                obj.save()
+                obj.delete()
+
     template = 'parsed_data.html'
-    return render(request, template, context)   
-
-
-
+    return render(request, template, context)

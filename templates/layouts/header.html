@@ -1,27 +1,47 @@
 {% load static %}
-<div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+<div class="navbar navbar-expand-lg fixed-top navbar-white" style="background-color: #31C142">
     <div class="container">
-      <a href="{% url 'index' %}" class="navbar-brand">Currency Exchange <span style="color: rgb(39, 117, 161);"> <strong>App</strong> </span>   </a>
-      <button class='button' style=""><a href="{% url 'language' 'UZ' %}">AMOUNT</a></button>
-      <button class='button' style=""><a href="{% url 'currency'  'USD' %}">Parsed Data</a></button>
-      <a href="../" class="navbar-tech">USEFULL LINK </a>
+        <a href="{% url 'index' %}" class="navbar-brand" style="color: white">Currency Exchange <span
+                style="color: white;"> <strong>App</strong> </span> </a>
+        <button class='button ml-5'><a href="{% url 'language' 'UZ' %}">AMOUNT</a></button>
+        <button class='button ml-5'><a href="{% url 'currency'  'USD' %}">Parsed Data</a></button>
+        {% if request.user.is_authenticated %}
+            <div class="dropdown text-sm"
+                 style="margin-left: 50px; text-decoration: None; ">
+                <a class="reset-anchor dropdown-toggle"
+                   id="destinations"
+                   href="#"
+                   data-bs-toggle="dropdown"
+                   data-bs-display="static"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                    <i class="fas fa-user-circle" style="font-size:16px; margin-right:4px;"></i>
+                    {{ request.user.username }}
+                </a>
+                <div class="dropdown-menu dropdown-menu-end mt-3 "
+                     aria-labelledby="destinations">
+                    <a class="dropdown-item text-sm"
+                       href="#">Profile</a><a class="dropdown-item text-sm" href="#">Edit Account</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-sm text-danger" href="{% url 'logout' %}"> <b>Logout</b> </a>
+                </div>
+            </div>
+        {% else %}
+            <a class="nav-link" href="{% url 'user_form' %}"> <i class="fas fa-user me-1 text-gray fw-normal"></i>Login</a>
+        {% endif %}
     </div>
-  </div>
-  
-  <br><br><br>
-  <div id="jumbotron" class="jumbotron" style="text-align: center; margin-top:-50px">
-    <h1 id="devise" class="display-5">Devise </h1>
-    <h5>Exchange Rate Converter</h5>
-    <img src="{% static 'main_body/images/image.png' %}" class="image" style="width:100px; margin-bottom:-50px; " >
-   
-  </div>
-  <div class="container">
-  <div class="page-header" id="banner">
-    <div class="row">
-      <div class="col-sm-15">
-        <h1 style="align-content: center;"> </h1>
-        <p class="lead" style="margin-left:280px; font-size:2rem">
-      </p>
-      </div>
-    </div>
-  </div>
+</div>
+
+<br><br><br>
+<div id="jumbotron" class="jumbotron" style="text-align: center; margin-top:-50px; background-color:#f2f2f6;">
+    <h1 id="devise" class="display-5" style="color:#000000">Devise </h1>
+    <h5 style="color:#000000">Exchange Rate Converter</h5>
+    <img src="{% static 'main_body/images/image.png' %}" class="image" style="width:100px; margin-bottom:-50px; ">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+        integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
+        crossorigin="anonymous"></script>

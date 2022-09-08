@@ -1,85 +1,84 @@
 {% extends 'base.html' %}
 {% load static %}
-    <style>
-        {% block style %}
-        .button {
-          transition-duration: 0.4s;
-          border: none;
-          color: white;
-          padding: 15px 32px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          font-size: 16px;
-          background-color: #fff;
-          margin-right: 100px;
-        }
-        
-        .button:hover {
-          background-color: #4CAF50; 
-        }
-        .button a{
-            text-decoration:none;
-            color:black;
-        }
-        .button:hover a{
-          text-decoration:none;
-          color: white;
-      }
-
-        .main-container{
-          margin-top: 60px;
-          display:flex;
-        }
-
-        .rate{
-          margin-top: 15px;
-          width:120px;
-          text-align: center;
-          font-size: 8px;
-        }
-        {% endblock style %}
-
-    </style>
-  </head>
-  <body style="overflow:hidden">
+{% block links %}
+    <link rel="stylesheet" href="{% static 'main_body/css/exchange.css' %}">
+{% endblock links %}
 {% block main %}
-<form method="post">
-  {% csrf_token %}
-  <div class="main-container">
-    <div class="container">
-      <div class="currency">
-         <select class="form-control" id="currency-one" name="first">
-        {% for currencies in currency %}
-          <option value="{{currencies}}">{{currencies}}</option>
-          {% endfor %}
-        </select>
-      <br>
-        <input type="number" id="amount-one" name="amount1" value="1" style="width:100%" />
-      </div>
-  </div>
-  <br>
-    <div class="center-item">
-      <div class="swap-btn">
-        <button type="submit" id="swap" class="btn btn-outline-primary mx-auto d-block" >Swap <i class="fa fa-refresh" aria-hidden="true"></i></button>
-      </div>
-      <!-- Dynamic rate inserted in DOM based on exchange rate fetched from API -->
-      <div class="rate" id="rate"></div>
-    </div>
-      <br>
-      <div class="container">
-        <div class="currency">
-           <select class="form-control" id="currency-two" name="second">
-            {% for currencies in currency %}
-          <option value="{{currencies}}" {% if currencies == currencies %}selected="selected"{% endif %}>{{currencies}}</option>
-          {% endfor %}
-          </select>
-        <br>
-          <input type="text" id="amount-two" placeholder="0" name="amount2" value=" {{rate}} " style="width:100%" readonly />
+    <form id="new_form" method="post">
+        {% csrf_token %}
+        <div class="main-container">
+            <div class="container">
+                <div class="currency">
+                    <select class="form-control" id="first" name="first">
+                        {% for currencies in currency %}
+                            <option class="option-select" value="{{ currencies }}">{{ currencies }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <input type="number" id="amount1" name="amount1" value="1" style="width:100%"/>
+                </div>
+            </div>
+            <br>
+            <div class="center-item">
+                <div class="swap-btn">
+                    <button type="button" id="swap" class="swap btn btn-outline-light mx-auto d-block">Swap <i
+                            class="fa fa-refresh" aria-hidden="true"></i></button>
+                </div>
+                <!-- Dynamic rate inserted in DOM based on exchange rate fetched from API -->
+                <div class="rate" id="rate"></div>
+            </div>
+            <br>
+            <div class="container">
+                <div class="currency">
+                    <select class="form-control option-select" id="second" name="second">
+                        {% for currencies in currency %}
+                            <option class="option-select" value="{{ currencies }}">{{ currencies }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <input type="text" id="amount2" placeholder="0" name="amount2" value=" {{ rate }} "
+                           style="width:100%" readonly/>
+                </div>
+            </div>
         </div>
-    </div>
-  </div>
-</form>
-  <br><br><br>
+    </form>
+    <br><br><br>
+{% endblock main %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            $('#swap').click(function () {
+                const first = document.querySelector('select#first').value;
+                const second = document.querySelector('select#second').value;
+                const val1 = document.querySelector('input#amount1').value;
+                const val2 = document.querySelector('input#amount2').value;
+                document.querySelector('select#first').value = second;
+                document.querySelector('select#second').value = first;
+                document.querySelector('input#amount1').value = parseFloat(val2);
+                document.querySelector('input#amount2').value = parseFloat(val1);
 
-  {% endblock main %}
+            });
+            document.querySelector('input#amount1').addEventListener('keyup', (e) => {
+                const value = e.target.value;
+                const result = document.querySelector('input#amount2');
+                const first = document.querySelector('select#first').value;
+                const second = document.querySelector('select#second').value;
+                if (value.trim().length > 0) {
+                    fetch("/json-converter/", {
+                        body: JSON.stringify({
+                            value: value,
+                            first: first,
+                            second: second
+                        }),
+                        method: "POST",
+                    })
+                        .then((req) => req.json())
+                        .then((data) => {
+                            console.log(data);
+                            result.value = parseFloat(data['rate']);
+                        })
+                }
+            })
+        })
+    </script>
+{% endblock scripts %}

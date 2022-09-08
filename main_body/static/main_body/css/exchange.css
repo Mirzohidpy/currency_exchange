@@ -1,0 +1,11 @@
+       .main-container {
+            margin-top: 60px;
+            display: flex;
+        }
+
+        .rate {
+            margin-top: 15px;
+            width: 120px;
+            text-align: center;
+            font-size: 8px;
+        }

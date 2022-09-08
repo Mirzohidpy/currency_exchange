@@ -3,6 +3,9 @@ table, th, td {
     border-collapse: collapse;
   }
 
+
+
+
 .language{
     margin-left: 5%;
 }
@@ -17,6 +20,7 @@ table, th, td {
 }
 
 body{
+    background-color: #f2f2f6;
     background-repeat: no-repeat;
     background-attachment: fixed;
 
@@ -36,7 +40,7 @@ body{
 }
 
 .language li a:active {
-    color: white
+    color: black
 }
 
 
@@ -47,3 +51,4 @@ body{
 td{
     margin-left: 50px;
 }
+
