@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.converter, name='index'),
     path('language/<str:lang>', views.test1, name='language'),
-    path('currency/<str:currency>', views.parsing, name='currency'),
+    path('currency/<str:currency>', views.currencys, name='currency'),
     path('members/', include('django.contrib.auth.urls')),
     path('members/', include('members.urls')),
     path('json-converter/', views.json_converter, name='json_converter'),

@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib import messages
@@ -16,7 +15,6 @@ def user_form(request):
 
 
 def user_register(request):
-
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -44,10 +42,8 @@ def user_login(request):
         login(request, user)
         return redirect("index")
     else:
-        messages.error(request, f"Error:\n\n{ form.error_messages }")
+        messages.error(request, f"Error:\n\n{form.error_messages}")
         return redirect('user_form')
-
-
 
 # def country_names(request):
 #     url = "https://api.apilayer.com/exchangerates_data/symbols"
@@ -69,5 +65,3 @@ def user_login(request):
 #     print(data)
 #     template = "registration/user_form.html"
 #     return render(request, template, context=context)
-
-

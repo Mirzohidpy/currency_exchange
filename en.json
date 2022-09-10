@@ -1,0 +1,125 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "portfolio": "Portfolio",
+    "news": "News"
+  },
+  "home": {
+    "products": "Our products",
+    "beautiful": "are beautiful"
+  },
+  "services": {
+    "web": {
+      "name": "Web Development",
+      "description": "Creative web sites...",
+      "bg" : "/assets/web.webp"
+    },
+    "design": {
+      "name": "Graphic Design",
+      "description": "Logo Branding, Social media designs..",
+      "bg" : "/assets/design.webp"
+    },
+    "smm": {
+      "name": "Social media marketing",
+      "description": "Telegram bot, instagram...",
+      "bg" : "/assets/smm.webp"
+    },
+    "more": {
+      "name": "More",
+      "description": "Others...",
+      "bg" : "/assets/others.webp"
+    }
+  },
+  "partners": {
+    "impact": {
+      "name": "Impact LC",
+      "description": "Partners Group is a global private markets investment manager "
+    },
+    "khwarizmi": {
+      "name": "Mukhammad Al-Khwarizmi",
+      "description": "Partners Group is a global private markets investment manager "
+    },
+    "uchbaqaloq": {
+      "name": "Uchbaqaloq kafe",
+      "description": "Partners Group is a global private markets investment manager "
+    },
+    "teded": {
+      "name": "TedEd Club",
+      "description": "Partners Group is a global private markets investment manager "
+    }
+  },
+  "footer": {
+    "address": "Mukhammad Al-Khwarizmi",
+    "office": "New office (In Shaa Allah)",
+    "contact" : {
+      "email": "gdservices gmail.com",
+      "number": "+998 99 899 89 98"
+    },
+    "social" : {
+      "instagram" : "https://www.instagram.com/gdteamuz/",
+      "telegram" : "https://t.me/gdteamuz"
+    }
+  },
+  "about": {
+    "header" : "About us",
+    "info" : "Lorem ipsum - dolor sit amet, consectetur adipiscing elit ut aliquam,\n\npurus sit amet luctus venenatis,ipsum dolor sit amet, consectetur ingilla urna, porttitor rhoncus dolor purus non enim praesent elementum facilisis leo, vel fringilla est ullamcorper eget nulla facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam, purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor rhoncus dolor purus non enim praesent elementum facilisis leo, vel fringilla est ullamcorper eget nulla facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra"
+  },
+  "portfolio" : {
+    "title" : "Portfolio",
+    "1" : {
+      "id" : 1,
+      "url" : "/assets/1.webp",
+      "title" : "Impact Learning centre",
+      "body" : "smm"
+    },
+    "2" : {
+      "id" : 2,
+      "url" : "/assets/2.webp",
+      "title" : "Training",
+      "body" : ""
+    },
+    "3" : {
+      "id" : 3,
+      "url" : "/assets/3.webp",
+      "title" : "Design",
+      "body" :  "manipulation"
+    },
+    "4" : {
+      "id" : 4,
+      "url" : "/assets/4.webp",
+      "title" : "TEDEdClub",
+      "body" :  "project management"
+    },
+    "5" : {
+      "id" : 5,
+      "url" : "/assets/5.webp",
+      "title" : "Branding",
+      "body" :  "TEDEdClub"
+    },
+    "6" : {
+      "id" : 6,
+      "url" : "/assets/6.webp",
+      "title" : "Uch Baqaloq",
+      "body" :  "Restaurant"
+    },
+    "7" : {
+      "id" : 7,
+      "url" : "/assets/7.webp",
+      "title" : "TEDEdClub",
+      "body" :  "media"
+    },
+    "8" : {
+      "id" : 8,
+      "url" : "/assets/8.webp",
+      "title" : "Design",
+      "body" :  "manipulation"
+    },
+    "9" : {
+      "id" : 9,
+      "url" : "/assets/9.webp",
+      "title" : "TEDEdClub",
+      "body" :  "smm"
+    }
+  }
+}

@@ -98,6 +98,7 @@ def converter(request):
     template = 'echange.html'
     return render(request, template, context)
 
+
 @csrf_exempt
 def json_converter(request):
     print('salom')
@@ -219,17 +220,46 @@ def parsing(request, currency):
     #         price = bank_price_info['price']
     #         bank = bank_price_info['']
 
-    arr = []
-    for i in context.values():
-        arr.append(i)
-    obj = Currency()
-    for cur_list in curr_list:
-        if cur_list == currency:
-            for i in range(len(arr[1])):
-                print(cur_list)
-                obj.set_arguments(cur_list, arr[1][i], arr[2][i], arr[3][i], arr[4][i])
-                obj.save()
-                obj.delete()
-
+    # arr = []
+    # for i in context.values():
+    #     arr.append(i)
+    #
+    # for cur_list in arr[0]:
+    #     if request.method == 'GET' and cur_list == currency:
+    #         for i in range(len(arr[1])):
+    #             obj = Currency()
+    #             obj.set_arguments(cur_list, arr[1][i], arr[2][i], arr[3][i], arr[4][i])
+    #             obj.save()
+    # print(obj)
+    # obj.save()
     template = 'parsed_data.html'
     return render(request, template, context)
+
+
+def currencys(request, currency):
+    curr_list = ['USD', 'RUB', 'EUR', 'GBP', 'JPY', 'KZT']
+    bank_names_left = []
+    bank_names_right = []
+    prices_left = []
+    prices_right = []
+    allCurrency = Currency.objects.all()
+    context = {'currency':allCurrency}
+    for i in curr_list:
+        if i == currency:
+            for j in allCurrency:
+                # print(j.curr_list)
+                if i == j.curr_list:
+                    bank_names_left.append(j.bank_names_left)
+                    bank_names_right.append(j.bank_names_right)
+                    prices_left.append(j.prices_left)
+                    prices_right.append(j.prices_right)
+
+    context = {
+        'curr_list': curr_list,
+        'bank_names_left': bank_names_left,
+        'bank_names_right': bank_names_right,
+        'prices_left': prices_left,
+        'prices_right': prices_right,
+    }
+
+    return render(request, 'parsed_data.html', context)

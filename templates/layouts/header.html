@@ -15,7 +15,7 @@
                    data-bs-display="static"
                    aria-haspopup="true"
                    aria-expanded="false">
-                    <i class="fas fa-user-circle" style="font-size:16px; margin-right:4px;"></i>
+                    <img src="{% static 'img/round-account.png'  %}" alt="">
                     {{ request.user.username }}
                 </a>
                 <div class="dropdown-menu dropdown-menu-end mt-3 "
@@ -27,7 +27,7 @@
                 </div>
             </div>
         {% else %}
-            <a class="nav-link" href="{% url 'user_form' %}"> <i class="fas fa-user me-1 text-gray fw-normal"></i>Login</a>
+            <a class="nav-link" href="{% url 'user_form' %}"> <img src="{% static 'img/round-account.png'  %}" alt=""> </i>Login</a>
         {% endif %}
     </div>
 </div>
